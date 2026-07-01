@@ -1,4 +1,4 @@
-import { useAppStore } from '../store/useAppStore';
+import { useAppStore } from '@/store/useAppStore';
 import { Navigate } from 'react-router-dom';
 
 export default function Login() {
@@ -8,17 +8,20 @@ export default function Login() {
   if (isAuthenticated) return <Navigate to="/" replace />;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-900 px-4">
-      <div className="w-full max-w-sm rounded-lg border border-slate-800 bg-slate-950 p-8 shadow-xl">
-        <h2 className="mb-6 text-center text-3xl font-extrabold text-emerald-400">
-          CryptoTracker
-        </h2>
-        <p className="mb-6 text-center text-sm text-slate-400">
+    <div className="flex min-h-screen items-center justify-center bg-black px-4 antialiased">
+      <div className="w-full max-w-sm rounded-lg border border-neutral-900 bg-neutral-950 p-8 shadow-2xl">
+        <div className="mb-6 flex justify-center items-center gap-2">
+          <span className="w-2 h-6 bg-orange-500 rounded-sm"></span>
+          <h2 className="text-3xl font-extrabold text-white tracking-tight">
+            CRYPTO<span className="text-neutral-500 font-normal">TRACKER</span>
+          </h2>
+        </div>
+        <p className="mb-6 text-center text-sm text-neutral-400">
           Acesse o painel em tempo real 
         </p>
         <button 
           onClick={() => login('Leonardo')} 
-          className="w-full rounded-lg bg-emerald-500 py-3 text-sm font-bold text-slate-950 transition-all hover:bg-emerald-400 active:scale-[0.98]"
+          className="w-full rounded-lg bg-orange-500 py-3 text-sm font-bold text-black transition-all hover:bg-orange-400 active:scale-[0.98]"
         >
           Entrar
         </button>

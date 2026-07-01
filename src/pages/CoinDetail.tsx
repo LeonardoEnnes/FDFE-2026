@@ -5,8 +5,10 @@ export default function CoinDetail() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-emerald-400 capitalize">Detalhes: {id} </h1>
-      <p className="text-slate-400">Gráfico reativo recebendo dados via WebSocket.</p>
+      <h1 className="text-3xl font-bold text-white tracking-tight">
+        Detalhes: <span className="text-orange-500 capitalize">{id}</span>
+      </h1>
+      <p className="text-neutral-400 text-sm">Gráfico reativo recebendo dados via WebSocket.</p>
     </div>
   );
 }

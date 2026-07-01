@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '@/store/useAppStore';
 import { LayoutDashboard, Compass, Settings as SettingsIcon, LogOut } from 'lucide-react';
 
@@ -6,52 +6,84 @@ export default function Layout() {
   const logout = useAppStore((state) => state.logout);
   const user = useAppStore((state) => state.user);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  // Função auxiliar para marcar o link ativo de forma sutil
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <div className="flex min-h-screen bg-slate-900 text-slate-100">
-      {/* Sidebar */}
-      <aside className="w-64 border-r border-slate-800 bg-slate-950 p-6 flex flex-col justify-between">
+    <div className="flex min-h-screen bg-black text-slate-200 antialiased selection:bg-orange-500 selection:text-black">
+      
+      {/* Sidebar - Fundo cinza quase preto, borda fina separadora */}
+      <aside className="w-64 border-r border-neutral-900 bg-neutral-950 p-6 flex flex-col justify-between">
         <div className="space-y-8">
-          <div className="text-xl font-black text-emerald-400 tracking-wider">
-            CRYPTO.LIVE
+          {/* Logo Minimalista */}
+          <div className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+            <span className="w-2 h-5 bg-orange-500 rounded-sm"></span>
+            CRYPTO<span className="text-neutral-500 font-normal">TRACKER</span>
           </div>
-          <nav className="space-y-2">
-            <Link to="/" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-900 rounded-lg transition-all">
-              <LayoutDashboard size={20} /> Dashboard 
+          
+          {/* Navegação Sóbria */}
+          <nav className="space-y-1">
+            <Link 
+              to="/" 
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                isActive('/') 
+                  ? 'bg-neutral-900 text-orange-500' 
+                  : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+              }`}
+            >
+              <LayoutDashboard size={18} /> Dashboard
             </Link>
-            <Link to="/explorer" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-900 rounded-lg transition-all">
-              <Compass size={20} /> Explorar 
+            <Link 
+              to="/explorer" 
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                isActive('/explorer') 
+                  ? 'bg-neutral-900 text-orange-500' 
+                  : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+              }`}
+            >
+              <Compass size={18} /> Explorar
             </Link>
-            <Link to="/settings" className="flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-900 rounded-lg transition-all">
-              <SettingsIcon size={20} /> Configurações 
+            <Link 
+              to="/settings" 
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                isActive('/settings') 
+                  ? 'bg-neutral-900 text-orange-500' 
+                  : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+              }`}
+            >
+              <SettingsIcon size={18} /> Configurações
             </Link>
           </nav>
         </div>
 
-        {/* Perfil & Logout */}
-        <div className="border-t border-slate-800 pt-4 flex items-center justify-between">
+        {/* Perfil Inferior Limpo */}
+        <div className="border-t border-neutral-900 pt-4 flex items-center justify-between">
           <div className="truncate pr-2">
-            <p className="text-xs text-slate-500">Usuário</p>
-            <p className="text-sm font-semibold text-slate-300 truncate">{user?.username}</p>
+            <p className="text-[11px] uppercase tracking-wider text-neutral-600 font-semibold">User</p>
+            <p className="text-sm font-medium text-neutral-300 truncate">{user?.username}</p>
           </div>
           <button 
             onClick={handleLogout}
-            className="p-2 text-slate-400 hover:text-red-400 rounded-lg hover:bg-slate-900 transition-all"
-            title="Sair"
+            className="p-2 text-neutral-500 hover:text-orange-500 rounded-md hover:bg-neutral-900 transition-colors"
+            title="Sair do sistema"
           >
-            <LogOut size={18} />
+            <LogOut size={16} />
           </button>
         </div>
       </aside>
 
-      {/* Conteúdo Principal da Rota Ativa */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        <Outlet />
+      {/* Área de Conteúdo */}
+      <main className="flex-1 bg-neutral-950 p-8 overflow-y-auto">
+        <div className="max-w-7xl mx-auto">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
