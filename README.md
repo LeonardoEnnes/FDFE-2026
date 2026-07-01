@@ -1,75 +1,68 @@
-# React + TypeScript + Vite
+# CryptoTracker — Sistema em Tempo Real
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação de monitoramento e análise de criptomoedas em tempo real com WebSockets.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Como Executar o Projeto
 
-## React Compiler
+### Requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Certifique-se de possuir o Node.js e o gerenciador de pacotes **pnpm** instalados em sua máquina.
 
-## Expanding the ESLint configuration
+### Passo a Passo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clonar o repositório:**
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+   ```bash
+   git clone https://github.com/LeonardoEnnes/FDFE-2026.git
+   cd FDFE-2026
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+2. **Instalar as dependências:**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   pnpm install
+   ```
+
+3. **Executar em ambiente de desenvolvimento:**
+
+   ```bash
+   pnpm dev
+   ```
+
+   Acesse a aplicação localmente através do endereço: [http://localhost:3000](http://localhost:3000)
+
+4. **Executar a suíte de testes unitários:**
+
+   ```bash
+   pnpm test
+   ```
+
+---
+
+## Tecnologias Utilizadas
+
+- **React 19 & TypeScript** - Tipagem estrita de dados em toda a aplicação (zero `any` explícito).
+- **Vite** - Bundler de alta performance com gerenciamento personalizado de Path Aliases (`@/*`).
+- **Tailwind CSS (v4.0)** - Estilização utilitária de alta velocidade e engine nativa.
+- **Zustand (v5.0)** - Gerenciamento de estado global leve e persistente.
+- **Binance WebSocket API** - Transmissão reativa contínua e nativa de dados diretamente do browser.
+- **CoinGecko API** - Consumo de REST API externa para listagem estática do mercado.
+- **Recharts** - Renderização de gráficos de linha otimizados para receber atualizações frequentes em tempo real.
+- **Vitest & React Testing Library** - Infraestrutura para testes automatizados de componentes e estados.
+
+---
+
+## Estrutura do Projeto
 
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+src/
+├── components/   # Componentes reutilizáveis (Layout Base e Sidebar)
+├── pages/        # 5 telas da aplicação (Login, Dashboard, Explorar, Detalhes, Configurações)
+├── hooks/        # Custom Hooks encapsulando o ciclo de vida dos WebSockets
+├── store/        # Configuração e persistência do estado global com Zustand
+├── types/        # Contratos e interfaces TypeScript
+└── App.tsx       # gerenciamento do Roteamento e Guard de Rotas Protegidas
+test/             # testes unitarios
 ```
