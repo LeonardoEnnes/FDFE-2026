@@ -1,28 +1,41 @@
-import { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { useAppStore } from '@/store/useAppStore';
+
+import Login from '@/pages/Login';
+import Dashboard from '@/pages/Dashboard';
+import Explorer from '@/pages/Explorer';
+import CoinDetail from '@/pages/CoinDetail';
+import Settings from '@/pages/Settings';
+
+import Layout from '@/components/Layout';
+
+// Guard de Rotas Protegidas
+const ProtectedRoutes = () => {
+  const isAuthenticated = useAppStore((state) => state.isAuthenticated);
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+};
 
 export function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col">
-      <main className="flex flex-col items-center justify-center flex-grow py-12 gap-8">
-        
-        <div className="relative flex flex-col items-center">
-          <h1 className="text-4xl font-extrabold text-emerald-400 mb-4">
-            Crypto Live Tracker
-          </h1>
-          <p className="text-slate-400">teste</p>
-        </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Rota Pública */}
+        <Route path="/login" element={<Login />} />
 
-        <button
-          onClick={() => setCount((c) => c + 1)}
-          className="px-6 py-2 bg-emerald-900/30 border border-emerald-500/50 rounded-lg text-emerald-400 hover:border-emerald-400 transition-all"
-        >
-          Ticks capturados: {count}
-        </button>
-      </main>
+        {/* Rotas Protegidas envelopadas no Layout Base */}
+        <Route element={<ProtectedRoutes />}>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/explorer" element={<Explorer />} />
+            <Route path="/coin/:id" element={<CoinDetail />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
+        </Route>
 
-    </div>
+        {/* Fallback*/}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
