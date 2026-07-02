@@ -1,4 +1,4 @@
-# CryptoTracker — Sistema em Tempo Real
+# CryptoTracker - Dashboard em Tempo Real
 
 Aplicação de monitoramento e análise de criptomoedas em tempo real com WebSockets.
 
